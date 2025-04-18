@@ -15,9 +15,11 @@
       document.addEventListener("DOMContentLoaded", () => {
         const p = new URL(decodeURIComponent(document.location.href))
           .searchParams;
-        const s = p.get("s") || "09:00";
-        const e = p.get("e") || "17:00";
+
+        let s = p.get("s") || "09:00";
+        let e = p.get("e") || "17:00";
         const t = p.get("t") || "Duration Timer";
+        const pad = (n) => ("00" + Math.floor(n)).slice(-2);
         const gei = (i) => document.getElementById(i);
         gei("text-title").innerText = t;
         document.title =
@@ -33,11 +35,23 @@
           const sm = parseInt(t[1], 10);
           const nowt = nowh * 60 * 60 + nowm * 60 + nows;
           const st = sh * 60 * 60 + sm * 60;
+          if (isNaN(st)) {
+            alert(
+              `Error: Invalid parameter: "${s}"\n` +
+                `Going back to the settings page...`
+            );
+            window.location.href = new URL(
+              "./index.html",
+              window.location.href
+            );
+          }
+
           console.log(nowt, st);
-          return nowt - st;
+          return [`${pad(sh)}:${pad(sm)}`, nowt - st];
         };
-        let ds = diff(s);
-        let de = diff(e);
+        let ds, de;
+        [s, ds] = diff(s);
+        [e, de] = diff(e);
         const f = () => {
           ds++;
           de++;
@@ -51,7 +65,6 @@
             de > 0 ? `Ended at ${e}. Elapsed:` : `Ends at ${e}. Remaining:`;
           const fs = (d) => {
             const t = Math.abs(d);
-            const pad = (n) => ("00" + Math.floor(n)).slice(-2);
             return `${pad(t / 60 / 60)}:${pad((t / 60) % 60)}:${pad(t % 60)}`;
           };
           gei("time-start").innerText = fs(ds);
