@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duration Timer</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("submit").addEventListener("click", () => {
+          const url = new URL("./timer.html", document.location.href);
+          const s = document.getElementById("time-start").value || "09:00";
+          const e = document.getElementById("time-end").value || "17:00";
+          const t =
+            document.getElementById("input-title").value || "Duration Timer";
+          url.searchParams.append("s", s);
+          url.searchParams.append("e", e);
+          url.searchParams.append("t", t);
+          window.location.href = url.href;
+        });
+      });
+    </script>
+    <style>
+      #container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h4 id="title">Input Time Duration</h4>
+      <p id="start">
+        <label>Title: </label>
+        <input type="text" id="input-title" value="Duration Timer" />
+      </p>
+      <p id="start">
+        <label>Start: </label>
+        <input type="time" id="time-start" value="09:00" />
+      </p>
+      <p id="end">
+        <label>End: </label>
+        <input type="time" id="time-end" value="17:00" />
+      </p>
+      <button id="submit">Submit</button>
+    </div>
+  </body>
+</html>
