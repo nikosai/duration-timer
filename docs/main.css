@@ -1,0 +1,28 @@
+body {
+  --bg: #fff;
+  --text: #252525;
+  --highlight: #c00;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg: #252525;
+    --text: #fff;
+    --highlight: #c33;
+  }
+}
+
+.highlight {
+  color: var(--highlight);
+}
+
+#container {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5em;
+}

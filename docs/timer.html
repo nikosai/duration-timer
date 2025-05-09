@@ -10,6 +10,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="main.css" />
     <title>Duration Timer</title>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -58,6 +59,7 @@
         };
         resetTimer();
         setInterval(resetTimer, 10000);
+        // ds, deはそれぞれからの経過秒数
         const f = () => {
           ds++;
           de++;
@@ -93,6 +95,22 @@
             ds > 0 ? `Started at ${s}. Elapsed:` : `Starts at ${s}. Remaining:`;
           gei("text-end").innerText =
             de > 0 ? `Ended at ${e}. Elapsed:` : `Ends at ${e}. Remaining:`;
+
+          if (ds > 0) {
+            gei("text-start").classList.add("highlight");
+            gei("time-start").classList.add("highlight");
+          } else {
+            gei("text-start").classList.remove("highlight");
+            gei("time-start").classList.remove("highlight");
+          }
+          if (de > 0) {
+            gei("text-end").classList.add("highlight");
+            gei("time-end").classList.add("highlight");
+          } else {
+            gei("text-end").classList.remove("highlight");
+            gei("time-end").classList.remove("highlight");
+          }
+
           const fs = (d) => {
             const t = Math.abs(d);
             return `${pad(t / 60 / 60)}:${pad((t / 60) % 60)}:${pad(t % 60)}`;
@@ -106,11 +124,6 @@
       });
     </script>
     <style>
-      #container {
-        text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 1.5em;
-      }
       p {
         font-size: 3em;
         margin: 0;
@@ -142,7 +155,7 @@
         <h4 id="text-end"></h4>
         <p id="time-end"></p>
       </div>
-      <a id="return" href="#">Return to Settings</a>
+      <button id="return" style="margin-top: 20px">Return to Settings</button>
     </div>
   </body>
 </html>
