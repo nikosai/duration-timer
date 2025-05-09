@@ -15,6 +15,11 @@
       document.addEventListener("DOMContentLoaded", () => {
         const p = new URL(decodeURIComponent(document.location.href))
           .searchParams;
+        const ret = () => {
+          const u = new URL("./index.html", window.location.href);
+          u.search = p;
+          window.location.href = u;
+        };
 
         let s = p.get("s") || "09:00";
         let e = p.get("e") || "17:00";
@@ -42,10 +47,7 @@
                 `Error: Invalid parameter: "${s}"\n` +
                   `Going back to the settings page...`
               );
-              window.location.href = new URL(
-                "./index.html",
-                window.location.href
-              );
+              ret();
             }
 
             console.log(nowt, st);
@@ -64,28 +66,28 @@
           if (ds > 12 * 60 * 60) ds -= 24 * 60 * 60;
           if (de > 12 * 60 * 60) de -= 24 * 60 * 60;
           const b = gei("progress-bar");
-          if (ds > 0 && de <= 0){
-            const p = Math.floor(ds/(ds-de)*100)
-            gei("text-progress").innerText = `In progress... (${p}%)`
+          if (ds > 0 && de <= 0) {
+            const p = Math.floor((ds / (ds - de)) * 100);
+            gei("text-progress").innerText = `In progress... (${p}%)`;
             const b = gei("progress-bar");
-            b.innerText = `${p}%`
-            b.max = `${ds-de}`
-            b.value = `${ds}`
+            b.innerText = `${p}%`;
+            b.max = `${ds - de}`;
+            b.value = `${ds}`;
           } else if (ds <= 0 && de <= 0) {
-            gei("text-progress").innerText = `Waiting...`
-            b.innerText = `${0}%`
-            b.max = `${100}`
-            b.value = `${0}`
+            gei("text-progress").innerText = `Waiting...`;
+            b.innerText = `${0}%`;
+            b.max = `${100}`;
+            b.value = `${0}`;
           } else if (ds > 0 && de > 0) {
-            gei("text-progress").innerText = `Time is Over!`
-            b.innerText = `${100}%`
-            b.max = `${100}`
-            b.value = `${100}`
+            gei("text-progress").innerText = `Time is Over!`;
+            b.innerText = `${100}%`;
+            b.max = `${100}`;
+            b.value = `${100}`;
           } else {
-            gei("text-progress").innerText = `?`
-            b.innerText = `${50}%`
-            b.max = `${100}`
-            b.value = `${50}`
+            gei("text-progress").innerText = `zzz...`;
+            b.innerText = `${50}%`;
+            b.max = `${100}`;
+            b.value = `${50}`;
           }
           gei("text-start").innerText =
             ds > 0 ? `Started at ${s}. Elapsed:` : `Starts at ${s}. Remaining:`;
@@ -100,6 +102,7 @@
         };
         f();
         setInterval(f, 1000);
+        gei("return").addEventListener("click", ret);
       });
     </script>
     <style>
@@ -119,6 +122,9 @@
         padding-top: 1em;
         display: block;
       }
+      progress {
+        height: 1.5em;
+      }
     </style>
   </head>
   <body>
@@ -136,7 +142,7 @@
         <h4 id="text-end"></h4>
         <p id="time-end"></p>
       </div>
-      <a href="./index.html">Return to Settings</a>
+      <a id="return" href="#">Return to Settings</a>
     </div>
   </body>
 </html>

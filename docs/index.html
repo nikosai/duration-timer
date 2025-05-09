@@ -13,12 +13,23 @@
     <title>Duration Timer</title>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("submit").addEventListener("click", () => {
+        const p = new URL(decodeURIComponent(document.location.href))
+          .searchParams;
+
+        let s = p.get("s") || "09:00";
+        let e = p.get("e") || "17:00";
+        const t = p.get("t") || "Duration Timer";
+        // const pad = (n) => ("00" + Math.floor(n)).slice(-2);
+        const gei = (i) => document.getElementById(i);
+        gei("time-start").value = s;
+        gei("time-end").value = e;
+        gei("input-title").value = t;
+
+        gei("submit").addEventListener("click", () => {
           const url = new URL("./timer.html", document.location.href);
-          const s = document.getElementById("time-start").value || "09:00";
-          const e = document.getElementById("time-end").value || "17:00";
-          const t =
-            document.getElementById("input-title").value || "Duration Timer";
+          const s = gei("time-start").value || "09:00";
+          const e = gei("time-end").value || "17:00";
+          const t = gei("input-title").value || "Duration Timer";
           url.searchParams.append("s", s);
           url.searchParams.append("e", e);
           url.searchParams.append("t", t);
