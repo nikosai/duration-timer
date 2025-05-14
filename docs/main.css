@@ -1,7 +1,7 @@
 body {
   --bg: #fff;
   --text: #252525;
-  --highlight: #c00;
+  --highlight: #33a;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
   body {
     --bg: #252525;
     --text: #fff;
-    --highlight: #e99;
+    --highlight: #99f;
   }
 }
 
@@ -55,4 +55,32 @@ input {
 
 input[type="time"]::-webkit-calendar-picker-indicator {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="%23bbbbbb" d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/></svg>');
+}
+
+progress[value] {
+  --pgc: var(--highlight);
+  --pgb: lightgray;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  width: 200px;
+  height: 0.5em;
+  margin: 0 10px;
+  border-radius: 100px;
+  box-shadow: 0px 0px 5px var(--text);
+  background: var(--pgb);
+}
+progress[value]::-webkit-progress-bar {
+  border-radius: 100px;
+  background: var(--pgb);
+}
+progress[value]::-webkit-progress-value {
+  border-radius: 100px;
+  background: var(--pgc);
+}
+progress[value]::-moz-progress-bar {
+  border-radius: 100px;
+  background: var(--pgc);
 }
